@@ -1,0 +1,51 @@
+1->
+int sum(Node* root){
+    if(root==NULL) return 0;
+    return root->val + sum(root->left) + sum(root->right);
+}
+
+2->
+int mini(Node* root, int &minix){
+    if(root == NULL) return INT_MAX;
+    minix = min(minix, root->val);
+    mini(root->left, minix);
+    mini(root->right, minix);
+    return minix;
+}
+
+3->
+int levels(TreeNode* root){
+        if(root==NULL) return 0;
+        return 1 + max(levels(root->left),levels(root->right));
+    }
+    bool isBalanced(TreeNode* root) {
+        if(root==NULL) return true;
+        int left = levels(root->left);
+        int right = levels(root->right);
+        int diff = abs(left - right);
+        if(diff>1) return false;
+        bool leftTreeAns = isBalanced(root->left);
+        if(leftTreeAns==false) return false;
+        bool rightTreeAns = isBalanced(root->right);
+        if(rightTreeAns==false) return false;
+        return true;
+    }
+
+
+4->
+bool sam(TreeNode* x, TreeNode* y){
+        if(x == NULL && y == NULL) return true;
+        if(x == NULL || y == NULL) return false;
+        if(x->val != y->val) return false;
+        bool leftsame = sam(x->left, y->right);
+        if(leftsame == false) return false;
+        bool rightsame = sam(x->right, y->left);
+        if(rightsame == false) return false;
+        return true;
+
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(!root) return NULL;
+        return sam(root->left, root->right);
+    }
+
